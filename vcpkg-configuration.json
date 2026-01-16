@@ -1,0 +1,17 @@
+***REMOVED***
+    "default-registry": ***REMOVED***
+        "kind": "git",
+        "repoository": "https://github.com/microsoft/vcpkg",
+        "baseline": ""
+    ***REMOVED***,
+    "registries": [
+        ***REMOVED***
+            "kind": "git",
+            "repoository": "https://github.com/42dotmk/base42-vcpkg-registry",
+            "packages": [
+                "sparq"
+          ***REMOVED***,
+            "baseline": "insert-commit-hash-here"
+        ***REMOVED***
+  ***REMOVED***
+***REMOVED***
