@@ -20,3 +20,4 @@ cd "$REGISTRY_ROOT"
     --x-builtin-ports-root=ports \
     --x-builtin-registry-versions-dir=versions \
     x-add-version "$@"
+    

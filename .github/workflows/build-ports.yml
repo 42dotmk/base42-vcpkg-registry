@@ -1,0 +1,25 @@
+name: Port Build Verification
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-sparq:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+
+      - name: Register Base42 Registry
+        run: |
+          cp vcpkg-configuration.json $VCPKG_ROOT/vcpkg-configuration.json
+
+      - name: Build Sparq
+        run: |
+          $VCPKG_ROOT/vcpkg install sparq

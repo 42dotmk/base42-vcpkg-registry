@@ -1,0 +1,35 @@
+name: Registry Validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+
+      - name: Validate ports
+        env:
+          VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+        run: |
+          chmod +x scripts/*.sh
+
+          for port in ports/*; do
+            port_name=$(basename "$port")
+
+            scripts/format-port.sh "$port_name"
+            scripts/validate-port.sh "$port_name"
+            scripts/sync-port-version.sh \
+              --overwrite-version \
+              "$port_name"
+          done
+
+          git diff --exit-code

@@ -368,3 +368,24 @@ Every pull request is validated through the registry's continuous integration wo
 Changes **must** be merged using squash commits. This keeps the registry history compact and makes it easier to track package evolution over time.
 
 The goal of the review process is not only to validate that a package builds successfully but also to ensure that dependency definitions, platform support and version tracking remain consistent throughout the registry.
+
+## Continuous integration
+
+The registry is validated automatically through GitHub Actions.
+
+Every pull request and push to the `main` branch performs:
+
+- Manifest formatting validation
+- Port structure validation
+- Version metadata verification
+- Package build verification
+
+Contributors are encouraged to run the maintenance scripts locally before opening a pull request:
+
+```sh
+scripts/format-port.sh sparq
+scripts/validate-port.sh sparq
+scripts/sync-port-version.sh sparq
+```
+
+This helps ensure that the CI pipeline succeeds without additional changes being required during review.
