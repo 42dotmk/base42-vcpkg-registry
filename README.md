@@ -116,7 +116,7 @@ The `ports/` directory contains all package definitions. Each package has its ow
 
 The `versions/` directory stores package version history and baseline information. These files allow vcpkg to resolve package versions consistently across projects.
 
-The `scripts/` directory contains helper utilities used to automate common maintenance tasks such as updating package versions and refreshing registry metadata.
+The `scripts/` directory contains helper utilities used during registry maintenance. These scripts simplify common contributor workflows such as formatting manifests, validating package changes and synchronizing version metadata.
 
 In most cases contributors will work primarily inside the `ports/` directory and use the provided scripts when preparing updates.
 
@@ -141,23 +141,36 @@ The `portfile.cmake` file contains the package acquisition and build logic. This
 
 After making changes, validate the package locally before creating a pull request.
 
-Formatting should also be verified before committing:
+Before creating a commit, format and validate the affected port using the provided helper scripts.
+
+On Windows:
+
+```cmd
+scripts\format-port.bat sparq
+scripts\validate-port.bat sparq
+```
+
+On Unix:
 
 ```sh
-vcpkg format-manifest --all
+scripts/format-port.sh sparq
+scripts/validate-port.sh sparq
 ```
+
+The validation step performs a lightweight verification of the package metadata and versioning workflow before registry metadata is updated.
 
 Once the package behaves as expected, commit the changes(don't push yet!) and update the registry version metadata using the registry maintenance script.
 
-on Windows:
+On Windows:
+
 ```cmd
-scripts\update_port_version.bat sparq
+scripts\sync-port-version.bat sparq
 ```
 
-or on Unix:
+On Unix:
 
 ```sh
-scripts/update_port_version.sh sparq
+scripts/sync-port-version.sh sparq
 ```
 
 The script updates version tracking files and ensures the registry metadata remains synchronized with the modified port.
@@ -203,14 +216,37 @@ A minimal package manifest may look similar to the following:
 
 The manifest defines package metadata while the portfile describes how the library is downloaded, configured and installed.
 
-Before publishing a new package, verify that it builds correctly and that all required dependencies are declared. New ports should also be included in any validation workflows used by the registry so future changes continue to be tested automatically.
+Before publishing a new package, verify that it builds correctly and that all required dependencies are declared.
 
-Once the port is complete, generate version metadata using the registry script:
+Before generating version metadata, format and validate the new port.
 
-```sh
-scripts/update_port_version.sh new-library
+On Windows:
+
+```cmd
+scripts\format-port.bat new-library
+scripts\validate-port.bat new-library
 ```
 
+On Unix:
+
+```sh
+scripts/format-port.sh new-library
+scripts/validate-port.sh new-library
+```
+
+Once validation succeeds, generate version metadata using the registry maintenance script.
+
+On Windows:
+
+```cmd
+scripts\sync-port-version.bat new-library
+```
+
+On Unix:
+
+```sh
+scripts/sync-port-version.sh new-library
+```
 
 The script updates version tracking files and ensures the registry metadata remains synchronized with the modified port.
 
@@ -224,6 +260,66 @@ git commit --amend --no-edit
 and finally push the branch for review.
 
 Don't forget to append the newly created port in the example `vcpkg-configuration.json`, to make it easier for your downstream users
+
+## Registry maintenance scripts
+
+The registry includes several helper scripts that wrap common vcpkg commands and provide a consistent workflow across contributors.
+
+### Formatting a port
+
+Formats a specific port manifest.
+
+Windows:
+
+```cmd
+scripts\format-port.bat sparq
+```
+
+Unix:
+
+```sh
+scripts/format-port.sh sparq
+```
+
+### Validating a port
+
+Runs a lightweight validation pass before version metadata is updated.
+
+Windows:
+
+```cmd
+scripts\validate-port.bat sparq
+```
+
+Unix:
+
+```sh
+scripts/validate-port.sh sparq
+```
+
+### Syncing version metadata
+
+Updates the port's version file and the registry baseline using `vcpkg x-add-version`.
+
+Windows:
+
+```cmd
+scripts\sync-port-version.bat sparq
+```
+
+Unix:
+
+```sh
+scripts/sync-port-version.sh sparq
+```
+
+Additional arguments supported by `vcpkg x-add-version` may be passed directly to the script.
+
+Example:
+
+```cmd
+scripts\sync-port-version.bat sparq --overwrite-version
+```
 
 ## Working with local changes
 
