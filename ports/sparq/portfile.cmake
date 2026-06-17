@@ -18,5 +18,11 @@ vcpkg_cmake_config_fixup(
 
 vcpkg_copy_pdbs()
 
+# Policy bypass for missing LICENSE file
+set(VCPKG_POLICY_SKIP_COPYRIGHT_CHECK enabled)
+
+# Policy bypass for temporary empty include subdirectories
+set(VCPKG_POLICY_ALLOW_EMPTY_FOLDERS enabled)
+
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
