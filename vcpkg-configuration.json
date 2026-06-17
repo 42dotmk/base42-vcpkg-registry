@@ -11,7 +11,7 @@
             "packages": [
                 "sparq"
             ],
-            "baseline": "insert-commit-hash-here"
+            "baseline": "3833bb46ea65c1db763c1c3f258a12cab41ff5ec"
         }
     ]
 }
