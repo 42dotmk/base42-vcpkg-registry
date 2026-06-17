@@ -12,13 +12,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+            # Fetch all history so vcpkg can resolve the baseline commits properly
+            fetch-depth: 0
 
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
 
-      - name: Register Base42 Registry
+      - name: Register Local Workspace for Base42 Registry
         run: |
-          cp vcpkg-configuration.json $VCPKG_ROOT/vcpkg-configuration.json
+          echo '{
+            "registries": [
+              {
+                "kind": "git",
+                "repository": "${{ github.workspace }}",
+                "baseline": "${{ github.event.pull_request.head.sha || github.sha }}",  
+                "packages": [ "sparq" ]
+              }
+            ]
+          }' > vcpkg-configuration.json
+          
+          # Also supply an overlay path to guarantee the local version takes absolute precedence
+          echo "VCPKG_OVERLAY_PORTS=${{ github.workspace }}/ports" >> $GITHUB_ENV
 
       - name: Build Sparq
         run: |
