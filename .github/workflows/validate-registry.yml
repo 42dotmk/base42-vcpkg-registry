@@ -20,8 +20,6 @@ jobs:
         env:
           VCPKG_ROOT: ${{ github.workspace }}/vcpkg
         run: |
-          chmod +x scripts/*.sh
-
           for port in ports/*; do
             port_name=$(basename "$port")
 
