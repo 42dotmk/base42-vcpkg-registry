@@ -11,8 +11,8 @@ vcpkg_cmake_configure(
 vcpkg_cmake_install()
 
 vcpkg_cmake_config_fixup(
-	PACKAGE_NAME sparq
-	CONFIG_PATH lib/cmake/sparq
+    PACKAGE_NAME sparq
+    CONFIG_PATH lib/cmake/sparq
 )
 
 vcpkg_copy_pdbs()
