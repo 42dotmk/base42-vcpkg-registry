@@ -1,0 +1,16 @@
+{
+  "name": "sparq",
+  "version-semver": "0.0.1",
+  "description": "base42's embedded framework",
+  "homepage": "https://github.com/42dotmk/sparq",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}
