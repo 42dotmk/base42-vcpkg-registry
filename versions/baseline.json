@@ -2,7 +2,7 @@
   "default": {
     "sparq": {
       "baseline": "0.0.1",
-      "port-version": 2
+      "port-version": 3
     }
   }
 }
