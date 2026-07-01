@@ -1,7 +1,6 @@
 {
   "name": "sparq",
-  "version-semver": "0.0.1",
-  "port-version": 3,
+  "version-semver": "0.0.2",
   "description": "base42's embedded framework",
   "homepage": "https://github.com/42dotmk/sparq",
   "dependencies": [
