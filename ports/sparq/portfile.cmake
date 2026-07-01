@@ -1,9 +1,9 @@
-set(SPARQ_HASH "5822366b22d11a072eade207fc259778e6a80f36e10f858cf2b826e3c32a4a16f8c3143c44fa0237702ae19e0fbbc5b5e8ef369bab81f57215ddd932ef4ee2cd")
+set(SPARQ_HASH "8fa1dfa11667f7336c99c756d6afe5cb132f79b8779f48c9d6ca85596cf16902e7ef05d8c8f0624a287ecd30e8eb338cab36ce9b124cbdff170be197f4e7ddf3")
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO 42dotmk/sparq
-    REF 4e17461ad5264563abd68d9a7a06f9700437877d
+    REF d1fb6e6ecd00b97f38f129b0fab1ddf2f957ff91
     SHA512 ${SPARQ_HASH}
 )
 
@@ -20,8 +20,7 @@ vcpkg_cmake_config_fixup(
 
 vcpkg_copy_pdbs()
 
-# Policy bypass for missing LICENSE file
-set(VCPKG_POLICY_SKIP_COPYRIGHT_CHECK enabled)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
 
 # Policy bypass for temporary empty include subdirectories
 set(VCPKG_POLICY_ALLOW_EMPTY_FOLDERS enabled)
